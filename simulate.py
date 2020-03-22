@@ -3,6 +3,7 @@ from io import StringIO, BytesIO
 import datetime
 import sys
 import inspect
+from main import check
 
 def CreateXML():
     try:
@@ -68,7 +69,7 @@ def SimulateBuy(stock, amount):
     etree.SubElement(buy[buyIndex], "amount")
     buy[buyIndex][0].text = stock
     buy[buyIndex][1].text = now
-    buy[buyIndex][2].text = "12.67" #TODO: make dynamic like datetime
+    buy[buyIndex][2].text = check(stock) #TODO: make dynamic like datetime
     buy[buyIndex][3].text = str(amount)
 
     filestuff = etree.tostring(tree, pretty_print=True, encoding='unicode')
@@ -76,9 +77,36 @@ def SimulateBuy(stock, amount):
     file = open("simulatorData.xml", "w")
     file.write(filestuff) #overwrite filedata
 
-def SimulateSell(stock):
-    pass
+def SimulateSell(stock, amount):
+    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    parser = etree.XMLParser(remove_blank_text=True, remove_comments=True)
+    tree = etree.parse("simulatorData.xml",parser) #loads in document with the parser previously defined
+    root = tree.getroot() #root = <transactions/> basically
+
+    sell = root[1] #root is a list object with all elements inside. This just get's us <buy/>
+    sellIndex = len(sell) #finds where in the list to add next stock/currency
+
+    #start adding in all the elements our stock purchase needs and fills them out with text
+    etree.SubElement(sell, "stock")
+    etree.SubElement(sell[sellIndex], "name")
+    etree.SubElement(sell[sellIndex], "datetime")
+    etree.SubElement(sell[sellIndex], "price")
+    etree.SubElement(sell[sellIndex], "amount")
+    sell[sellIndex][0].text = stock
+    sell[sellIndex][1].text = now
+    sell[sellIndex][2].text = check(stock) #TODO: make dynamic like datetime
+    sell[sellIndex][3].text = str(amount)
+
+    filestuff = etree.tostring(tree, pretty_print=True, encoding='unicode')
+
+    file = open("simulatorData.xml", "w")
+    file.write(filestuff) #overwrite filedata
+
+
 CreateXML()
 
 SimulateBuy('NIO', 12)
+
+SimulateSell('NIO', 7)
 

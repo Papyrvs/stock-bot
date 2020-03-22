@@ -37,11 +37,25 @@ class Aksje:
     def buy(self):
         print("BOUGHT")
 
+        
+
+def check(ticker):
+    headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36"}
+
+    url = f'https://finance.yahoo.com/quote/{ticker}?p={ticker}&.tsrc=fin-srch'
+    with requests.Session() as s:
+        p = s.get(url, headers=headers)
+        p.encoding = 'utf-8'
+        content = lxml.html.fromstring(p.content)
+        price = content.xpath('//*[@id="quote-header-info"]/div[3]/div[1]/div/span[1]')[0].text
+    return price
+
 
 def price_check(ticker, headers, credentials, objs):
     table = prettytable.PrettyTable()
     table.field_names = ["Ticker", "Price in USD"]
-    def check(ticker):
+    def NestedCheck(ticker,table):
+        headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36"}
         url = f'https://finance.yahoo.com/quote/{ticker}?p={ticker}&.tsrc=fin-srch'
         with requests.Session() as s:
             p = s.get(url, headers=headers)
@@ -58,7 +72,7 @@ def price_check(ticker, headers, credentials, objs):
         # for _ in range(10):
         while True:
             for tickers in ticker:    
-                price = check(tickers)
+                price = NestedCheck(tickers)
                 
                 if price < 3.2:
                     objs[tickers].buy()
