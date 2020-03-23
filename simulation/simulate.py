@@ -3,7 +3,7 @@ from io import StringIO, BytesIO
 import datetime
 import sys
 import inspect
-from main import check
+from ..modules import stock as sc
 
 def CreateXML():
     try:
@@ -69,7 +69,7 @@ def SimulateBuy(stock, amount):
     etree.SubElement(buy[buyIndex], "amount")
     buy[buyIndex][0].text = stock
     buy[buyIndex][1].text = now
-    buy[buyIndex][2].text = check(stock) #TODO: make dynamic like datetime
+    buy[buyIndex][2].text = sc.check(stock) #TODO: make dynamic like datetime
     buy[buyIndex][3].text = str(amount)
 
     filestuff = etree.tostring(tree, pretty_print=True, encoding='unicode')
@@ -95,7 +95,7 @@ def SimulateSell(stock, amount):
     etree.SubElement(sell[sellIndex], "amount")
     sell[sellIndex][0].text = stock
     sell[sellIndex][1].text = now
-    sell[sellIndex][2].text = check(stock) #TODO: make dynamic like datetime
+    sell[sellIndex][2].text = sc.check(stock) #TODO: make dynamic like datetime
     sell[sellIndex][3].text = str(amount)
 
     filestuff = etree.tostring(tree, pretty_print=True, encoding='unicode')
@@ -109,4 +109,3 @@ CreateXML()
 SimulateBuy('NIO', 12)
 
 SimulateSell('NIO', 7)
-
