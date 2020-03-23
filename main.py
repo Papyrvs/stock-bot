@@ -11,10 +11,10 @@ def price_check(ticker, headers, credentials, objs):
     try:
         while True:
             for tickers in ticker:
-                price = check(tickers, table)
+                price = stock.check(tickers, table)
 
                 if float(price) < 3.2:
-                    objs[tickers].buy()
+                    objs[tickers].stock.buy()
     except KeyboardInterrupt:
         pass
 
