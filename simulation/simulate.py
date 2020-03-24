@@ -3,7 +3,12 @@ from io import StringIO, BytesIO
 import datetime
 import sys
 import inspect
-from ..modules import stock as sc
+import os
+
+PACKAGE_PARENT = '..'
+SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
+sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
+from modules import tick
 
 def CreateXML():
     try:
@@ -52,6 +57,8 @@ def CreateXML():
         return(False)
 
 def SimulateBuy(stock, amount):
+    stck = tick.ticker(stock)
+
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     parser = etree.XMLParser(remove_blank_text=True, remove_comments=True)
@@ -69,7 +76,7 @@ def SimulateBuy(stock, amount):
     etree.SubElement(buy[buyIndex], "amount")
     buy[buyIndex][0].text = stock
     buy[buyIndex][1].text = now
-    buy[buyIndex][2].text = sc.check(stock) #TODO: make dynamic like datetime
+    buy[buyIndex][2].text = stck.check()[stock] #TODO: make dynamic like datetime
     buy[buyIndex][3].text = str(amount)
 
     filestuff = etree.tostring(tree, pretty_print=True, encoding='unicode')
@@ -78,6 +85,7 @@ def SimulateBuy(stock, amount):
     file.write(filestuff) #overwrite filedata
 
 def SimulateSell(stock, amount):
+    stck = tick.ticker(stock)
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     parser = etree.XMLParser(remove_blank_text=True, remove_comments=True)
@@ -95,7 +103,7 @@ def SimulateSell(stock, amount):
     etree.SubElement(sell[sellIndex], "amount")
     sell[sellIndex][0].text = stock
     sell[sellIndex][1].text = now
-    sell[sellIndex][2].text = sc.check(stock) #TODO: make dynamic like datetime
+    sell[sellIndex][2].text = stck.check()[stock]#TODO: make dynamic like datetime
     sell[sellIndex][3].text = str(amount)
 
     filestuff = etree.tostring(tree, pretty_print=True, encoding='unicode')
