@@ -1,33 +1,29 @@
-from modules import stock, password, check
+from modules import stock, password, tick
 import prettytable
 import platform
 from tkinter import Tk
 
 
-def price_check(ticker, headers, credentials, objs):
-    table = prettytable.PrettyTable()
-    table.field_names = ["Ticker", "Price in USD"]
-
+def price_check(tickers, table, obj):
     try:
         while True:
-            for tickers in ticker:
-                price = check.check (tickers, table)
+            price = tickers.check(table) 
+            for key, value in price.items():
+                if float(value) < 4:
+                    tickers.buy(key, obj)
 
-                if float(price) < 3.2:
-                    objs[tickers].stock.buy()
     except KeyboardInterrupt:
         pass
 
 def main():
-    credentials = {'username': "FlyingRainbowPotato", 'password': password.pw()}
-
-    headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36"}
-    TICKER = [ "USD/CHF"]
-    #objs = {tickers: stock.Stock(credentials = credentials, ticker = tickers) for tickers in TICKER}
-
-    #price_check(TICKER, headers, credentials, objs)
-    test = check.ticker(["USD/CHF", "TSLA"])
-    print(test.ticker)
+    table = prettytable.PrettyTable()
+    table.field_names = ["Ticker", "Price in USD"]
+    credentials = {'username': "FlyingRainbowPotato", 'password': password.pw()}  
+    tickers = tick.ticker(["USD/CHF", "TSLA"]) # INFO: If fiat - FORMAT: USD/'currency'
+    objs = {tics: stock.Stock(credentials = credentials, ticker = tics) for tics in tickers.dticker}
+    
+    #objs[tickers[0]].buy()
+    price_check(tickers, table, objs)
 
 if __name__ == "__main__":
     main()

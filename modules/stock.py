@@ -15,7 +15,6 @@ class Stock:
         WIDTH = root.winfo_screenwidth()
         HEIGHT = root.winfo_screenheight()
         '''
-        path = os.getcwd()
         self.browser = webdriver.Chrome(ChromeDriverManager().install())
         self.username = credentials['username']
         self.password = credentials['password']
@@ -32,7 +31,7 @@ class Stock:
         wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/div/div/div[2]/div[2]/main/div/div/div/div/div[2]/div/a[1]/div[1]/span[1]'))).click()
 
     def buy(self):
-        print("BOUGHT")
+        print("BOUGHT " + self.ticker)
 
 
 
