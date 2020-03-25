@@ -1,9 +1,4 @@
-import os
-import platform
-import requests
-import lxml.html
-import sys
-import os
+import os, platform, requests, lxml.html, sys, os 
 
 PACKAGE_PARENT = '..'
 SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))

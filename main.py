@@ -1,8 +1,5 @@
 from modules import stock, password, tick
 import prettytable
-import platform
-from tkinter import Tk
-
 
 def price_check(tickers, table, obj):
     try:
