@@ -1,9 +1,6 @@
 from lxml import etree
 from io import StringIO, BytesIO
-import datetime
-import sys
-import inspect
-import os
+import datetime, sys, inspect, os
 
 PACKAGE_PARENT = '..'
 SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
