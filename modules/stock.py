@@ -2,7 +2,6 @@ from selenium import webdriver
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-from webdriver_manager.chrome import ChromeDriverManager
 import os
 # import Tkinter
 
@@ -15,7 +14,15 @@ class Stock:
         WIDTH = root.winfo_screenwidth()
         HEIGHT = root.winfo_screenheight()
         '''
-        self.browser = webdriver.Chrome(ChromeDriverManager().install())
+        try:
+            self.browser = webdriver.Chrome()
+        except:
+            try:
+                from webdriver_manager.chrome import ChromeDriverManager
+                self.browser = webdriver.Chrome(ChromeDriverManager().install())
+            except:
+                print("You can't use this program since you dont have Chrome Webdriver installed. \nPlease install the webdriver and add it to PATH. Link: https://chromedriver.chromium.org/downloads")
+        
         self.username = credentials['username']
         self.password = credentials['password']
         self.browser.get('https://trader.degiro.nl/login/#/login')
