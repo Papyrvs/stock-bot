@@ -42,3 +42,14 @@ class Stock:
 
 
 
+
+
+
+
+
+
+    
+    
+    # objs = {tics: stock.Stock(credentials = credentials, ticker = tics) for tics in tickers.dticker}
+    # #objs[tickers[0]].buy()
+    # price_check(tickers, table, objs)
