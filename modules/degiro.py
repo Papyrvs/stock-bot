@@ -5,6 +5,10 @@ import requests
 import lxml.html
 import sys
 import getpass
+PACKAGE_PARENT = '..'
+SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
+sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
+from simulation import simulate
 # from selenium import webdriver
 # from selenium.webdriver.support import expected_conditions as EC
 # from selenium.webdriver.common.by import By
@@ -14,7 +18,7 @@ import getpass
 class _Ticker:
     def __init__(self, ticker):
         if not isinstance(ticker, list):
-            ticker = ticker.split(",")
+            ticker = [ticker]
 
         ticks = ticker[:]
         # check if theres a currency inside the list
@@ -126,33 +130,60 @@ class Degiro:
     
     def getTickerData(self, ticker):
         self.ticker = ticker
+        if not isinstance(self.ticker, list):
+            self.ticker = [ticker]
+
         tickerInfo, entry = dict(), dict()
         try:
             for ticker in self.ticker:
+                if '/' in ticker:
+                        print(ticker, "is not supported right now") 
                 with requests.Session() as r:
                     url = '{}v5/products/lookup'.format(self.urls.productSearchUrl)
                     parm = {'searchText': ticker,'intAccount': self.intAccount, 'sessionId': self.sessionId, 'limit': 10}
                     p = r.get(url, params = parm)
-                    data = p.json()['products']
-                    if '/' in ticker:
-                        print(ticker, "is not supported right now") 
-                    for i in data:
-                        if i['symbol'] == ticker:        
-                            entry['id'] = i['id']
-                            entry['isin'] = i['isin']
-                            entry['productType'] = i['productType']
-                            entry['tradable'] = i['tradable']
-                            entry['currency'] = i['currency']
-                            entry['closePrice'] = i['closePrice']
-                            entry['closePriceDate'] = i['closePriceDate']
-                            entry['currentPrice'] = self.getCurrentPrice(ticker)[ticker]
-                            tickerInfo[i['symbol']] = entry.copy()
-            
+                    data = p.json()
+                    if 'products' in data:
+                        data = data['products']
+                        for i in data:
+                            if i['symbol'] == ticker:        
+                                entry['id'] = i['id']
+                                entry['isin'] = i['isin']
+                                entry['productType'] = i['productType']
+                                entry['tradable'] = i['tradable']
+                                entry['currency'] = i['currency']
+                                entry['closePrice'] = i['closePrice']
+                                entry['closePriceDate'] = i['closePriceDate']
+                                entry['currentPrice'] = self.getCurrentPrice(ticker)[ticker]
+                                tickerInfo[i['symbol']] = entry.copy()
+                    else:
+                        print('Ticker \'%s\' does not exist' % ticker)
+    
         except:
             print('Unable to retrieve ticker data. Status code: %s' % p.status_code)
-        
+            return False
+
         return tickerInfo
     
+    def testBuy(self, stockAmount):
+        for ticker in stockAmount:
+            print('Buying \'%s\'' % ticker) 
+            if self.getTickerData(ticker):
+                stock = simulate.Simulate(ticker)
+                stock.SimulateBuy(stockAmount[ticker])
+            else:
+                print('Could not buy stock \'%s\'' % ticker)
+               
+
+
+    def testSell(self, stockAmount):
+        for ticker in stockAmount:
+            print('Selling \'%s\'' % ticker) 
+            if self.getTickerData(ticker):
+                stock = simulate.Simulate(ticker)
+                stock.SimulateSell(stockAmount[ticker])
+            else:
+                print('Could not sell stock \'%s\'' % ticker)
     # def buyStock(self, ticker):            
     #     if isinstance(ticker, dict) == False:
     #         ticker = self.getTickerData(ticker)
@@ -193,7 +224,4 @@ class Degiro:
             # self.driver.find_element_by_xpath('//*[@id="loginForm"]/div[3]/button').click()
             # sleep(0.5)
             
-            
-            
-    
         
