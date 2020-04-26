@@ -9,7 +9,7 @@ The goal of Degiro Bot is to automate the buy/sell process in [Degiro](https://w
 
 
 ## Degiro API
-⚠️ DeGiro could change their API at any moment, if something is not working, please open an issue.
+⚠️ Degiro could change their API at any moment, if something is not working, please open an issue.
 
 *NOTE: THIS API IS **UNOFFICIAL***
 
