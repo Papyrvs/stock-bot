@@ -5,7 +5,7 @@ import datetime, sys, inspect, os
 PACKAGE_PARENT = '..'
 SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
 sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
-from modules import degiro
+from Degiro import degiro
 class Simulate:
     def __init__(self, stock):
         self.stck = degiro._Ticker(stock)
@@ -69,7 +69,7 @@ class Simulate:
         etree.SubElement(buy[buyIndex], "amount")
         buy[buyIndex][0].text = self.stock
         buy[buyIndex][1].text = now
-        buy[buyIndex][2].text = self.stck.checkPrice()[self.stock] #TODO: make dynamic like datetime
+        buy[buyIndex][2].text = str(self.stck.checkPrice()[self.stock]) #TODO: make dynamic like datetime
         buy[buyIndex][3].text = str(amount)
 
         filestuff = etree.tostring(tree, pretty_print=True, encoding='unicode')
@@ -95,7 +95,7 @@ class Simulate:
         etree.SubElement(sell[sellIndex], "amount")
         sell[sellIndex][0].text = self.stock
         sell[sellIndex][1].text = now
-        sell[sellIndex][2].text = self.stck.checkPrice()[self.stock]#TODO: make dynamic like datetime
+        sell[sellIndex][2].text = str(self.stck.checkPrice()[self.stock])#TODO: make dynamic like datetime
         sell[sellIndex][3].text = str(amount)
 
         filestuff = etree.tostring(tree, pretty_print=True, encoding='unicode')
