@@ -30,7 +30,7 @@ def main():
 
     # TODO:
     # - Buy/sell stocks
-    # - Support currency
+    # - Support currency ---- DONE
 
     # NOT IN USE
 
