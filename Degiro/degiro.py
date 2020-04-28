@@ -294,3 +294,11 @@ class Degiro:
                     print('Could not sell stock \'%s\'' % ticker)
         else:
             print('Not a dictionary')
+            
+    def buyValue(self):
+        stock = simulate.Simulate('NIO')
+        return stock.buyValue()
+
+    def totalValue(self):
+        stock = simulate.Simulate('NIO')
+        return stock.totalValue()
