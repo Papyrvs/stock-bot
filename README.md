@@ -48,7 +48,7 @@ obj.testSell(stockAmount) # Sells stocks. Key is the stock it is selling, while 
 ```
 ### Todo:
 - Buy/sell stocks
-- Support currency
+- ~~Support currency~~
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
