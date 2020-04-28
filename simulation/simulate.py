@@ -7,9 +7,10 @@ SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.
 sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
 from modules import degiro
 class Simulate:
-    def __init__(self, stock):
-        self.stck = degiro._Ticker(stock)
-        self.stock = stock
+    def __init__(self, stock = None):
+        if stock != None:
+            self.stck = degiro._Ticker(stock)
+            self.stock = stock
         try:
             file = open("simulatorData.xml", "r")
             file.close
@@ -102,3 +103,38 @@ class Simulate:
 
         file = open("simulatorData.xml", "w")
         file.write(filestuff) #overwrite filedata
+
+    def buyValue(self):
+        parser = etree.XMLParser(remove_blank_text=True, remove_comments=True)
+        tree = etree.parse("simulatorData.xml",parser) #loads in document with the parser previously defined
+        root = tree.getroot() #root = <transactions/> basically
+
+        buy = root[0]
+        value = 0
+
+        for i in buy:
+            value += float(i[2].text)
+        return value
+    
+    def sellValue(self):
+        parser = etree.XMLParser(remove_blank_text=True, remove_comments=True)
+        tree = etree.parse("simulatorData.xml",parser) #loads in document with the parser previously defined
+        root = tree.getroot() #root = <transactions/> basically
+
+        sell = root[1]
+        value = 0
+        
+        for i in sell:
+            value += float(i[2].text)
+        return value
+
+    def totalValue(self):
+        bv = self.buyValue()
+        sv = self.sellValue()
+        tv = sv-bv
+        tv = round(tv, 5)
+        return tv
+
+
+
+

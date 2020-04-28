@@ -9,11 +9,6 @@ PACKAGE_PARENT = '..'
 SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
 sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
 from simulation import simulate
-# from selenium import webdriver
-# from selenium.webdriver.support import expected_conditions as EC
-# from selenium.webdriver.common.by import By
-# from selenium.webdriver.support.ui import WebDriverWait
-# from time import sleep
 
 class _Ticker:
     def __init__(self, ticker):
@@ -184,6 +179,14 @@ class Degiro:
                 stock.SimulateSell(stockAmount[ticker])
             else:
                 print('Could not sell stock \'%s\'' % ticker)
+    
+    def buyValue(self):
+        stock = simulate.Simulate('NIO')
+        return stock.buyValue()
+
+    def totalValue(self):
+        stock = simulate.Simulate('NIO')
+        return stock.totalValue()
     # def buyStock(self, ticker):            
     #     if isinstance(ticker, dict) == False:
     #         ticker = self.getTickerData(ticker)
@@ -224,4 +227,3 @@ class Degiro:
             # self.driver.find_element_by_xpath('//*[@id="loginForm"]/div[3]/button').click()
             # sleep(0.5)
             
-        
