@@ -1,13 +1,13 @@
 import sys
-from modules import degiro
+from Degiro import *
 
 def main():
-    '''tickers = ['RYRSSDSD', 'TSLA'] # INFO: If fiat - FORMAT: USD/'currency'
+    tickers = ['USD/CHF', 'TSLA'] # INFO: If fiat - FORMAT: USD/'currency'
     stockAmount = {'NIO': 5, 'TSLA': 4} # Key is the stock, and value is the amount
 
     # NOTE: ALL RETURNS ARE DICTIONARIES
 
-    obj = degiro.Degiro() # Creates an instance of degiro.Degiro()
+    obj = Degiro() # Creates an instance of degiro.Degiro()
 
     ticker_data = obj.getTickerData(tickers) # Gets information about the inputted tickers
     print(ticker_data)
@@ -30,7 +30,7 @@ def main():
 
     # TODO:
     # - Buy/sell stocks
-    # - Support currency
+    # - Support currency ---- DONE
 
     # NOT IN USE
 
