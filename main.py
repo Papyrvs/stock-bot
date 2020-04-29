@@ -17,7 +17,7 @@ def main():
             obj.testBuy(stockAmount)
             numBought += 1
 
-        if random.randint(0,99) == 99 and numSold < numBought:
+        if random.randint(0,20) == 20 and numSold < numBought:
             obj.testSell(stockAmount)
             numSold += 1
         time.sleep(1) #If u fucking need documentation for this u don't even deserve to be on github
