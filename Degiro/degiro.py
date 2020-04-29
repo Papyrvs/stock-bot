@@ -1,15 +1,16 @@
+from simulation import simulate
 import json
 import os
 import platform
 import requests
 import lxml.html
 import sys
+from pprint import pprint
 import getpass
 PACKAGE_PARENT = '..'
 SCRIPT_DIR = os.path.dirname(os.path.realpath(
     os.path.join(os.getcwd(), os.path.expanduser(__file__))))
 sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
-from simulation import simulate
 # from selenium import webdriver
 # from selenium.webdriver.support import expected_conditions as EC
 # from selenium.webdriver.common.by import By
@@ -95,7 +96,6 @@ class _Client:
 
             else:
                 print('Login failed. Status code: %s' % p.status_code)
-
                 return False
 
     def info(self) -> int:
@@ -121,6 +121,7 @@ class Degiro:
     password: str
 
     def __init__(self):
+
         self.headers = {
             "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) \
             AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36"
@@ -137,8 +138,13 @@ class Degiro:
             self.client.username = self.username = login['username']
             self.client.password = self.password = login['password']
             self.sessionId = self.client.login()
+            if self.sessionId:
+                self.intAccount = self.client.info()
 
-        self.intAccount = self.client.info()
+            else:
+                print('Username or password is wrong. Check login.json, and try again')
+                sys.exit(1)
+
         self.urls = _Urls(self.headers, self.sessionId)
 
     def __saved(self) -> bool:
@@ -199,6 +205,19 @@ class Degiro:
             return True
         return False
 
+    def __check_if_ticker_exists(self, ticker):
+        try:
+            open('existing_tickers.txt', 'r')
+        except IOError:
+            open('existing_tickers.txt', 'w')
+        if ticker not in open('existing_tickers.txt', 'r').read():
+            if self.getTickerData(ticker):
+                with open('existing_tickers.txt', 'a+') as r:
+                    r.write('%s\n' % ticker)
+            else:
+                return False
+        return True
+
     def getCashFunds(self) -> dict:
         parm = {
             'cashFunds': 0
@@ -216,7 +235,7 @@ class Degiro:
 
         return cash
 
-    def getCurrentPrice(self, ticker) -> dict:
+    def getCurrentPrice(self, ticker: list) -> dict:
         self.__tick: object = _Ticker(ticker)
         return self.__tick.checkPrice()
 
@@ -226,8 +245,18 @@ class Degiro:
         }
         data = self.__data(parm)
         data: dict = data['portfolio']['value']
-
         return data
+        # pprint(data)
+        # finished = {}
+        # for itemList in data:
+        #     finished[itemList['id']] = {}
+        #     for dics in itemList['value']:
+        #         # for dics in lists:
+        #         if dics['name'] == 'size':
+        #             finished[itemList['id']]['amount'] = dics['value']
+
+        
+        # pprint(finished)
 
     def getTickerData(self, ticker: list) -> dict:
         self.ticker = ticker
@@ -246,6 +275,7 @@ class Degiro:
                         'limit': 10
                     }
                     p = r.get(url, params=parm)
+                    print(p.url)
                     data: dict = p.json()
                     if 'products' in data:
                         data = data['products']
@@ -275,30 +305,32 @@ class Degiro:
         if self.__check_dict(stockAmount):
             for ticker in stockAmount:
                 print('Buying \'%s\'' % ticker)
-                if self.getTickerData(ticker):
+                if self.__check_if_ticker_exists(ticker):
                     stock = simulate.Simulate(ticker)
                     stock.SimulateBuy(stockAmount[ticker])
                 else:
                     print('Could not buy stock \'%s\'' % ticker)
+                    return False
         else:
-            print('Not a dictionary')
+            print('Input not a dictionary')
 
     def testSell(self, stockAmount: dict):
         if self.__check_dict(stockAmount):
             for ticker in stockAmount:
                 print('Selling \'%s\'' % ticker)
-                if self.getTickerData(ticker):
+                if self.__check_if_ticker_exists(ticker):
                     stock = simulate.Simulate(ticker)
                     stock.SimulateSell(stockAmount[ticker])
                 else:
                     print('Could not sell stock \'%s\'' % ticker)
+                    return False
         else:
-            print('Not a dictionary')
-            
-    def buyValue(self):
-        stock = simulate.Simulate('NIO')
+            print('Input is not a dictionary')
+
+    def buyValue(self, ticker):
+        stock = simulate.Simulate(ticker)
         return stock.buyValue()
 
-    def totalValue(self):
-        stock = simulate.Simulate('NIO')
+    def totalValue(self, ticker):
+        stock = simulate.Simulate(ticker)
         return stock.totalValue()
