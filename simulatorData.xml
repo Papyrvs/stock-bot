@@ -2,125 +2,149 @@
   <buy>
     <stock>
       <name>NIO</name>
-      <datetime>2020-04-22 11:46:20</datetime>
-      <price>3.0200</price>
+      <datetime>2020-04-28 20:43:00</datetime>
+      <price>3.405</price>
       <amount>5</amount>
     </stock>
     <stock>
       <name>TSLA</name>
-      <datetime>2020-04-22 11:46:22</datetime>
-      <price>686.72</price>
+      <datetime>2020-04-28 20:43:01</datetime>
+      <price>777.75</price>
       <amount>4</amount>
     </stock>
     <stock>
       <name>NIO</name>
-      <datetime>2020-04-22 11:49:52</datetime>
-      <price>3.0200</price>
+      <datetime>2020-04-28 20:47:20</datetime>
+      <price>3.399</price>
       <amount>5</amount>
     </stock>
     <stock>
       <name>TSLA</name>
-      <datetime>2020-04-22 11:49:54</datetime>
-      <price>686.72</price>
+      <datetime>2020-04-28 20:47:22</datetime>
+      <price>774.5</price>
       <amount>4</amount>
     </stock>
     <stock>
       <name>NIO</name>
-      <datetime>2020-04-22 11:54:03</datetime>
-      <price>3.0200</price>
+      <datetime>2020-04-28 20:48:25</datetime>
+      <price>3.39</price>
       <amount>5</amount>
     </stock>
     <stock>
       <name>TSLA</name>
-      <datetime>2020-04-22 11:54:05</datetime>
-      <price>686.72</price>
+      <datetime>2020-04-28 20:48:27</datetime>
+      <price>775.08</price>
       <amount>4</amount>
     </stock>
     <stock>
-      <name>TSLA</name>
-      <datetime>2020-04-22 11:57:55</datetime>
-      <price>686.72</price>
+      <name>NIO</name>
+      <datetime>2020-04-28 20:48:46</datetime>
+      <price>3.39</price>
       <amount>5</amount>
     </stock>
     <stock>
       <name>TSLA</name>
-      <datetime>2020-04-22 11:58:07</datetime>
-      <price>686.72</price>
+      <datetime>2020-04-28 20:48:48</datetime>
+      <price>774.67</price>
+      <amount>4</amount>
+    </stock>
+    <stock>
+      <name>NIO</name>
+      <datetime>2020-04-28 20:50:28</datetime>
+      <price>3.395</price>
       <amount>5</amount>
     </stock>
     <stock>
       <name>TSLA</name>
-      <datetime>2020-04-22 11:58:27</datetime>
-      <price>686.72</price>
+      <datetime>2020-04-28 20:50:29</datetime>
+      <price>775.43</price>
+      <amount>4</amount>
+    </stock>
+    <stock>
+      <name>NIO</name>
+      <datetime>2020-04-28 20:52:30</datetime>
+      <price>3.39</price>
       <amount>5</amount>
     </stock>
     <stock>
       <name>TSLA</name>
-      <datetime>2020-04-22 11:58:28</datetime>
-      <price>686.72</price>
-      <amount>5</amount>
-    </stock>
-    <stock>
-      <name>TSLA</name>
-      <datetime>2020-04-22 11:58:29</datetime>
-      <price>686.72</price>
-      <amount>5</amount>
+      <datetime>2020-04-28 20:52:32</datetime>
+      <price>771.6</price>
+      <amount>4</amount>
     </stock>
   </buy>
   <sell>
     <stock>
       <name>NIO</name>
-      <datetime>2020-04-22 11:46:24</datetime>
-      <price>3.0200</price>
+      <datetime>2020-04-28 20:43:21</datetime>
+      <price>3.405</price>
       <amount>5</amount>
     </stock>
     <stock>
       <name>TSLA</name>
-      <datetime>2020-04-22 11:46:26</datetime>
-      <price>686.72</price>
+      <datetime>2020-04-28 20:43:23</datetime>
+      <price>777.21</price>
       <amount>4</amount>
     </stock>
     <stock>
       <name>NIO</name>
-      <datetime>2020-04-22 11:49:56</datetime>
-      <price>3.0200</price>
+      <datetime>2020-04-28 20:47:37</datetime>
+      <price>3.399</price>
       <amount>5</amount>
     </stock>
     <stock>
       <name>TSLA</name>
-      <datetime>2020-04-22 11:49:58</datetime>
-      <price>686.72</price>
+      <datetime>2020-04-28 20:47:40</datetime>
+      <price>775.0</price>
       <amount>4</amount>
     </stock>
     <stock>
       <name>NIO</name>
-      <datetime>2020-04-22 11:54:07</datetime>
-      <price>3.0200</price>
+      <datetime>2020-04-28 20:48:56</datetime>
+      <price>3.395</price>
       <amount>5</amount>
     </stock>
     <stock>
       <name>TSLA</name>
-      <datetime>2020-04-22 11:54:09</datetime>
-      <price>686.72</price>
+      <datetime>2020-04-28 20:48:58</datetime>
+      <price>774.74</price>
       <amount>4</amount>
     </stock>
     <stock>
-      <name>TSLA</name>
-      <datetime>2020-04-22 11:57:55</datetime>
-      <price>686.72</price>
+      <name>NIO</name>
+      <datetime>2020-04-28 20:49:14</datetime>
+      <price>3.3921</price>
       <amount>5</amount>
     </stock>
     <stock>
       <name>TSLA</name>
-      <datetime>2020-04-22 11:58:08</datetime>
-      <price>686.72</price>
+      <datetime>2020-04-28 20:49:16</datetime>
+      <price>774.78</price>
+      <amount>4</amount>
+    </stock>
+    <stock>
+      <name>NIO</name>
+      <datetime>2020-04-28 20:50:32</datetime>
+      <price>3.395</price>
       <amount>5</amount>
     </stock>
     <stock>
       <name>TSLA</name>
-      <datetime>2020-04-22 11:58:29</datetime>
-      <price>686.72</price>
+      <datetime>2020-04-28 20:50:34</datetime>
+      <price>775.2</price>
+      <amount>4</amount>
+    </stock>
+    <stock>
+      <name>NIO</name>
+      <datetime>2020-04-28 20:52:41</datetime>
+      <price>3.39</price>
       <amount>5</amount>
+    </stock>
+    <stock>
+      <name>TSLA</name>
+      <datetime>2020-04-28 20:52:43</datetime>
+      <price>771.33</price>
+      <amount>4</amount>
     </stock>
   </sell>
 </transactions>
