@@ -2,6 +2,7 @@ import sys
 from Degiro import Degiro
 
 
+
 def main():
     tickers = ['USD/CHF', 'TSLA']  # INFO: If fiat - FORMAT: USD/'currency'
     # Key is the stock, and value is the amount
@@ -34,6 +35,8 @@ def main():
 
         # Sells stocks. Key is the stock it is selling, while the value is the amount
         obj.testSell(stockAmount)
+        
+        print("%s %s" % (obj.buyValue('NIO'), obj.totalValue('NIO')))
 
     # TODO:
     # - Buy/sell stocks

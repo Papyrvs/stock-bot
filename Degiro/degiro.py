@@ -1,4 +1,3 @@
-from simulation import simulate
 import json
 import os
 import platform
@@ -11,6 +10,7 @@ PACKAGE_PARENT = '..'
 SCRIPT_DIR = os.path.dirname(os.path.realpath(
     os.path.join(os.getcwd(), os.path.expanduser(__file__))))
 sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
+from simulation import simulate
 # from selenium import webdriver
 # from selenium.webdriver.support import expected_conditions as EC
 # from selenium.webdriver.common.by import By
@@ -171,6 +171,7 @@ class Degiro:
         for __ in range(3):
             save: str = input(
                 'Do you wish to save your credentials for later use? Y/N: ').upper()
+            print('Warning: The file is not going to be encrypted')
             if save == 'Y' or save == 'YES':
                 self.__createFile()
                 return
@@ -218,6 +219,23 @@ class Degiro:
                 return False
         return True
 
+    def __clean_porfolio(self, portfolio):
+        finished = {}
+        for itemList in portfolio:
+            finished[itemList['id']] = {}
+            for dics in itemList['value']:
+                if dics['name'] == 'size':
+                    finished[itemList['id']]['amount'] = dics['value']
+                elif dics['name'] == 'price':
+                    finished[itemList['id']]['price'] = dics['value']
+                elif dics['name'] == 'positionType':
+                    finished[itemList['id']]['type'] = dics['value']
+                elif dics['name'] == 'breakEvenPrice':
+                    finished[itemList['id']]['breakEvenPoint'] = dics['value']
+                elif dics['name'] == 'value':
+                    finished[itemList['id']]['value'] = dics['value']
+        return finished   
+
     def getCashFunds(self) -> dict:
         parm = {
             'cashFunds': 0
@@ -243,20 +261,7 @@ class Degiro:
         parm = {
             'portfolio': 0
         }
-        data = self.__data(parm)
-        data: dict = data['portfolio']['value']
-        return data
-        # pprint(data)
-        # finished = {}
-        # for itemList in data:
-        #     finished[itemList['id']] = {}
-        #     for dics in itemList['value']:
-        #         # for dics in lists:
-        #         if dics['name'] == 'size':
-        #             finished[itemList['id']]['amount'] = dics['value']
-
-        
-        # pprint(finished)
+        return self.__clean_porfolio(self.__data(parm)['portfolio']['value'])
 
     def getTickerData(self, ticker: list) -> dict:
         self.ticker = ticker
