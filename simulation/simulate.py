@@ -128,7 +128,7 @@ class Simulate:
 
         for i in buy:
             value += float(i[2].text)
-        return value
+        return round(value, 5)
 
     def sellValue(self):
         parser = etree.XMLParser(remove_blank_text=True, remove_comments=True)
@@ -141,7 +141,7 @@ class Simulate:
 
         for i in sell:
             value += float(i[2].text)
-        return value
+        return round(value, 5)
 
     def totalValue(self):
         return round(self.sellValue()-self.buyValue(), 5)

@@ -36,7 +36,7 @@ def main():
         # Sells stocks. Key is the stock it is selling, while the value is the amount
         obj.testSell(stockAmount)
         
-        print("%s %s" % (obj.buyValue('NIO'), obj.totalValue('NIO')))
+        print("%s %s" % (obj.buyValue(), obj.totalValue()))
 
     # TODO:
     # - Buy/sell stocks

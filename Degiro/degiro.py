@@ -331,10 +331,10 @@ class Degiro:
         else:
             print('Input is not a dictionary')
 
-    def buyValue(self, ticker):
-        stock = simulate.Simulate(ticker)
+    def buyValue(self) -> float:
+        stock = simulate.Simulate()
         return stock.buyValue()
 
-    def totalValue(self, ticker):
-        stock = simulate.Simulate(ticker)
+    def totalValue(self) -> float:
+        stock = simulate.Simulate()
         return stock.totalValue()
