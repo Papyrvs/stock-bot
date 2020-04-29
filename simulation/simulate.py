@@ -1,4 +1,3 @@
-from Degiro import degiro
 from lxml import etree
 from io import StringIO, BytesIO
 import datetime
@@ -6,16 +5,17 @@ import sys
 import inspect
 import os
 
-PACKAGE_PARENT = '..'
-SCRIPT_DIR = os.path.dirname(os.path.realpath(
-    os.path.join(os.getcwd(), os.path.expanduser(__file__))))
-sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
+# PACKAGE_PARENT = '..'
+# SCRIPT_DIR = os.path.dirname(os.path.realpath(
+#     os.path.join(os.getcwd(), os.path.expanduser(__file__))))
+# sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
+# from Degiro import degiro
 
 
 class Simulate:
     def __init__(self, stock=None):
         if stock != None:
-            self.stck = degiro._Ticker(stock)
+            # self.stck = degiro._Ticker(stock)
             self.stock = stock
         try:
             file = open("simulatorData.xml", "r")
@@ -59,7 +59,7 @@ class Simulate:
         if not file:
             sys.exit("File \"simulateData.xlm\" failed to open. Error 1")
 
-    def SimulateBuy(self, amount):
+    def SimulateBuy(self, amount, price):
         now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         parser = etree.XMLParser(remove_blank_text=True, remove_comments=True)
         # loads in document with the parser previously defined
@@ -80,7 +80,7 @@ class Simulate:
         buy[buyIndex][0].text = self.stock
         buy[buyIndex][1].text = now
         # TODO: make dynamic like datetime
-        buy[buyIndex][2].text = str(self.stck.checkPrice()[self.stock])
+        buy[buyIndex][2].text = str(price)
         buy[buyIndex][3].text = str(amount)
 
         filestuff = etree.tostring(tree, pretty_print=True, encoding='unicode')
@@ -88,7 +88,7 @@ class Simulate:
         file = open("simulatorData.xml", "w")
         file.write(filestuff)  # overwrite filedata
 
-    def SimulateSell(self, amount):
+    def SimulateSell(self, amount, price):
         now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         parser = etree.XMLParser(remove_blank_text=True, remove_comments=True)
         # loads in document with the parser previously defined
@@ -109,7 +109,7 @@ class Simulate:
         sell[sellIndex][0].text = self.stock
         sell[sellIndex][1].text = now
         # TODO: make dynamic like datetime
-        sell[sellIndex][2].text = str(self.stck.checkPrice()[self.stock])
+        sell[sellIndex][2].text = str(price)
         sell[sellIndex][3].text = str(amount)
 
         filestuff = etree.tostring(tree, pretty_print=True, encoding='unicode')
@@ -144,9 +144,4 @@ class Simulate:
         return value
 
     def totalValue(self):
-        bv = self.buyValue()
-        sv = self.sellValue()
-        tv = sv-bv
-        tv = round(tv, 5)
-        return tv
-
+        return round(self.sellValue()-self.buyValue(), 5)

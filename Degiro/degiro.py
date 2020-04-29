@@ -311,7 +311,7 @@ class Degiro:
                 print('Buying \'%s\'' % ticker)
                 if self.__check_if_ticker_exists(ticker):
                     stock = simulate.Simulate(ticker)
-                    stock.SimulateBuy(stockAmount[ticker])
+                    stock.SimulateBuy(stockAmount[ticker], self.getCurrentPrice(ticker)[ticker])
                 else:
                     print('Could not buy stock \'%s\'' % ticker)
                     return False
@@ -324,7 +324,7 @@ class Degiro:
                 print('Selling \'%s\'' % ticker)
                 if self.__check_if_ticker_exists(ticker):
                     stock = simulate.Simulate(ticker)
-                    stock.SimulateSell(stockAmount[ticker])
+                    stock.SimulateSell(stockAmount[ticker], self.getCurrentPrice(ticker)[ticker])
                 else:
                     print('Could not sell stock \'%s\'' % ticker)
                     return False

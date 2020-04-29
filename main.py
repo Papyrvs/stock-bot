@@ -1,5 +1,5 @@
 import sys
-from Degiro import Degiro
+from Degiro import degiro
 
 
 
@@ -10,7 +10,7 @@ def main():
 
     # NOTE: ALL RETURNS ARE DICTIONARIES
 
-    obj = Degiro()  # Creates an instance of degiro.Degiro()
+    obj = degiro.Degiro()  # Creates an instance of degiro.Degiro()
 
     # Gets information about the inputted tickers
     ticker_data = obj.getTickerData(tickers)
