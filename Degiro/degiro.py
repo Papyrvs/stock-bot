@@ -275,7 +275,6 @@ class Degiro:
                         'limit': 10
                     }
                     p = r.get(url, params=parm)
-                    print(p.url)
                     data: dict = p.json()
                     if 'products' in data:
                         data = data['products']
