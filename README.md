@@ -25,7 +25,7 @@ The Degiro API is an API that is designed to interact with the trading platform 
 from modules import degiro
 
 tickers = ['NIO', 'TSLA'] 
-~~stockAmount = {'NIO': 5, 'TSLA': 4} # Key is the stock, and value is the amount ~~
+~~stockAmount = {'NIO': 5, 'TSLA': 4} ~~# Key is the stock, and value is the amount 
 
 obj = degiro.Degiro() # Creates an instance of degiro.Degiro()
 
