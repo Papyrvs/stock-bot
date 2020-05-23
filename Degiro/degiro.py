@@ -1,59 +1,21 @@
+from . import diag
 import json
 import os
 import platform
 import requests
-import lxml.html
 import sys
 from pprint import pprint
 import getpass
-PACKAGE_PARENT = '..'
-SCRIPT_DIR = os.path.dirname(os.path.realpath(
-    os.path.join(os.getcwd(), os.path.expanduser(__file__))))
-sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
-from simulation import simulate
+# PACKAGE_PARENT = '..'
+# SCRIPT_DIR = os.path.dirname(os.path.realpath(
+#     os.path.join(os.getcwd(), os.path.expanduser(__file__))))
+# sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
+from . import simulate
 # from selenium import webdriver
 # from selenium.webdriver.support import expected_conditions as EC
 # from selenium.webdriver.common.by import By
 # from selenium.webdriver.support.ui import WebDriverWait
 # from time import sleep
-
-
-class _Ticker:
-
-    def __init__(self, tickers: list):
-        if not isinstance(tickers, list):
-            tickers = [tickers]
-
-        self.dticker = tickers[:]
-        # check if theres a currency inside the list
-        for i, tick in enumerate(self.dticker):
-            if "/" in tick:
-                tickers[i] = tick.split('/')[1] + "=X"
-
-        self.yticker = tickers
-
-    def checkPrice(self) -> dict:
-        headers = {
-            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) \
-            AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36"}
-        prices = {}
-        for index, ticker in enumerate(self.yticker):
-            try:
-                url = f'https://finance.yahoo.com/quote/{ticker}?p={ticker}&.tsrc=fin-srch'
-                with requests.Session() as s:   # Starts a session
-                    # Grabs content from yahoo stock site
-                    p = s.get(url, headers=headers)
-                    p.encoding = 'utf-8'
-                    content = lxml.html.fromstring(p.content)
-                    # Looks for price in the HTML
-                    price = content.xpath(
-                        '//*[@id="quote-header-info"]/div[3]/div[1]/div/span[1]')[0].text
-                    prices[self.dticker[index]] = float(price)
-            except:
-                print('Error while getting price')
-
-        return prices
-
 
 class _Urls:
     def __init__(self, header: dict, sessionId: dict):
@@ -254,7 +216,7 @@ class Degiro:
         return cash
 
     def getCurrentPrice(self, ticker: list) -> dict:
-        self.__tick: object = _Ticker(ticker)
+        self.__tick: object = diag.Ticker(ticker)
         return self.__tick.checkPrice()
 
     def getPortfolio(self) -> dict:
@@ -305,36 +267,36 @@ class Degiro:
 
         return tickerInfo
 
-    def testBuy(self, stockAmount: dict):
-        if self.__check_dict(stockAmount):
-            for ticker in stockAmount:
-                print('Buying \'%s\'' % ticker)
-                if self.__check_if_ticker_exists(ticker):
-                    stock = simulate.Simulate(ticker)
-                    stock.SimulateBuy(stockAmount[ticker], self.getCurrentPrice(ticker)[ticker])
-                else:
-                    print('Could not buy stock \'%s\'' % ticker)
-                    return False
-        else:
-            print('Input not a dictionary')
+    # def testBuy(self, stockAmount: dict):
+    #     if self.__check_dict(stockAmount):
+    #         for ticker in stockAmount:
+    #             print('Buying \'%s\'' % ticker)
+    #             if self.__check_if_ticker_exists(ticker):
+    #                 stock = simulate.Simulate(ticker)
+    #                 stock.SimulateBuy(stockAmount[ticker], self.getCurrentPrice(ticker)[ticker])
+    #             else:
+    #                 print('Could not buy stock \'%s\'' % ticker)
+    #                 return False
+    #     else:
+    #         print('Input not a dictionary')
 
-    def testSell(self, stockAmount: dict):
-        if self.__check_dict(stockAmount):
-            for ticker in stockAmount:
-                print('Selling \'%s\'' % ticker)
-                if self.__check_if_ticker_exists(ticker):
-                    stock = simulate.Simulate(ticker)
-                    stock.SimulateSell(stockAmount[ticker], self.getCurrentPrice(ticker)[ticker])
-                else:
-                    print('Could not sell stock \'%s\'' % ticker)
-                    return False
-        else:
-            print('Input is not a dictionary')
+    # def testSell(self, stockAmount: dict):
+    #     if self.__check_dict(stockAmount):
+    #         for ticker in stockAmount:
+    #             print('Selling \'%s\'' % ticker)
+    #             if self.__check_if_ticker_exists(ticker):
+    #                 stock = simulate.Simulate(ticker)
+    #                 stock.SimulateSell(stockAmount[ticker], self.getCurrentPrice(ticker)[ticker])
+    #             else:
+    #                 print('Could not sell stock \'%s\'' % ticker)
+    #                 return False
+    #     else:
+    #         print('Input is not a dictionary')
 
-    def buyValue(self) -> float:
-        stock = simulate.Simulate()
-        return stock.buyValue()
+    # def buyValue(self) -> float:
+    #     stock = simulate.Simulate()
+    #     return stock.buyValue()
 
-    def totalValue(self) -> float:
-        stock = simulate.Simulate()
-        return stock.totalValue()
+    # def totalValue(self) -> float:
+    #     stock = simulate.Simulate()
+    #     return stock.totalValue()

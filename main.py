@@ -1,15 +1,15 @@
 import sys
-from Degiro import degiro
+from Degiro import degiro, simulate
 
 
 
 def main():
     tickers = ['USD/CHF', 'TSLA']  # INFO: If fiat - FORMAT: USD/'currency'
     # Key is the stock, and value is the amount
-    stockAmount = {'NIO': 5, 'TSLA': 4}
+    stockAmount = {'NIO': 5, 'TSLA': 4}  # Deprecated
 
     # NOTE: ALL RETURNS ARE DICTIONARIES
-
+    sim = simulate.Simulate()  # Creates an instance of simulate.Simulate() so you can test sell/buy
     obj = degiro.Degiro()  # Creates an instance of degiro.Degiro()
 
     # Gets information about the inputted tickers
@@ -28,21 +28,27 @@ def main():
 
     # NOTE: DOES NOT RETURN ANYTHING.
     # IT IS ONLY A SIMULATION
-    for _ in range(10):
 
-        # Buys stocks. Key is the stock it is buying, while the value is the amount
-        obj.testBuy(stockAmount)
+    sim.SimulateBuy('NIO', 4)
+    sim.SimulateSell('NIO', 4)
 
-        # Sells stocks. Key is the stock it is selling, while the value is the amount
-        obj.testSell(stockAmount)
+    # DEPRECATED
+    # for _ in range(10):
+
+    #     # Buys stocks. Key is the stock it is buying, while the value is the amount
+    #     obj.testBuy(stockAmount)
+
+    #     # Sells stocks. Key is the stock it is selling, while the value is the amount
+    #     obj.testSell(stockAmount)
         
-        print("%s %s" % (obj.buyValue(), obj.totalValue()))
+    #     print("%s %s" % (obj.buyValue(), obj.totalValue()))
 
     # TODO:
     # - Buy/sell stocks
     # - Support currency ---- DONE
+    # - Create an algorithm 
 
-    # NOT IN USE
+    # DEPRECATED
 
         # objs = {tics: stock.Stock(credentials = credentials, ticker = tics) for tics in tickers.dticker}
         # #objs[tickers[0]].buy()

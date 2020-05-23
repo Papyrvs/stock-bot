@@ -4,6 +4,7 @@ import datetime
 import sys
 import inspect
 import os
+from . import diag
 
 # PACKAGE_PARENT = '..'
 # SCRIPT_DIR = os.path.dirname(os.path.realpath(
@@ -13,10 +14,7 @@ import os
 
 
 class Simulate:
-    def __init__(self, stock=None):
-        if stock != None:
-            # self.stck = degiro._Ticker(stock)
-            self.stock = stock
+    def __init__(self):
         try:
             file = open("simulatorData.xml", "r")
             file.close
@@ -59,7 +57,14 @@ class Simulate:
         if not file:
             sys.exit("File \"simulateData.xlm\" failed to open. Error 1")
 
-    def SimulateBuy(self, amount, price):
+    def SimulateBuy(self, stock, amount):
+        self.stock = stock
+        try:
+            price = diag.Ticker(self.stock).checkPrice()[self.stock]
+        except:
+            return 1
+
+        price = diag.Ticker(self.stock).checkPrice()[self.stock]
         now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         parser = etree.XMLParser(remove_blank_text=True, remove_comments=True)
         # loads in document with the parser previously defined
@@ -88,7 +93,13 @@ class Simulate:
         file = open("simulatorData.xml", "w")
         file.write(filestuff)  # overwrite filedata
 
-    def SimulateSell(self, amount, price):
+    def SimulateSell(self, stock, amount):
+        self.stock = stock
+        try:
+            price = diag.Ticker(self.stock).checkPrice()[self.stock]
+        except:
+            return 1
+
         now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         parser = etree.XMLParser(remove_blank_text=True, remove_comments=True)
         # loads in document with the parser previously defined
