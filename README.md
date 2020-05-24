@@ -1,13 +1,3 @@
-# Degiro Bot
-
-Degiro Bot is a Python library that is currently in the making. It is being made by two high school students, and it will hopefully be the start of **Papyrvs**. 
-
-
-## What is the goal of Degiro Bot?
-
-The goal of Degiro Bot is to automate the buy/sell process in [Degiro](https://www.degiro.nl/) using machine learning and AI *(at least we hope to do that)*. As of now, the project is not finished. We are currently working on simulations and algorithms to test the bot, and the API.
-
-
 ## Degiro API
 ⚠️ Degiro could change their API at any moment, if something is not working, please open an issue.
 
@@ -22,10 +12,10 @@ The Degiro API is an API that is designed to interact with the trading platform 
 ## API Usage
 
 ```python
-from modules import degiro
+from Degiro import degiro
 
 tickers = ['NIO', 'TSLA'] 
-~~stockAmount = {'NIO': 5, 'TSLA': 4} # Key is the stock, and value is the amount ~~
+stockAmount = {'NIO': 5, 'TSLA': 4} # Key is the stock, and value is the amount 
 
 obj = degiro.Degiro() # Creates an instance of degiro.Degiro()
 
@@ -43,15 +33,8 @@ portfolio = obj.getPortfolio() # Returns detailed info about your portfolio. Thi
                                    #      WELCOME TO THE MATRIX       #
                                    #----------------------------------#
 
-# DEPRECATED
-
-obj.testBuy(stockAmount) # Buys stocks. Key is the stock it is buying, while the value is the amount
-
-obj.testSell(stockAmount) # Sells stocks. Key is the stock it is selling, while the value is the amount
-
-# NEW:
-sim.SimulateBuy('NIO', 4)  # SimulateBuy(ticker, amount)
-sim.SimulateSell('NIO', 4)  # SimulateSell(ticker, amount)
+obj.testBuy(stockAmount) # Buys stocks
+obj.testSell(stockAmount) # Sells stocks
 
 ```
 ### Todo:

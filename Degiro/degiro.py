@@ -267,36 +267,36 @@ class Degiro:
 
         return tickerInfo
 
-    # def testBuy(self, stockAmount: dict):
-    #     if self.__check_dict(stockAmount):
-    #         for ticker in stockAmount:
-    #             print('Buying \'%s\'' % ticker)
-    #             if self.__check_if_ticker_exists(ticker):
-    #                 stock = simulate.Simulate(ticker)
-    #                 stock.SimulateBuy(stockAmount[ticker], self.getCurrentPrice(ticker)[ticker])
-    #             else:
-    #                 print('Could not buy stock \'%s\'' % ticker)
-    #                 return False
-    #     else:
-    #         print('Input not a dictionary')
+    def testBuy(self, stockAmount: dict):
+        if self.__check_dict(stockAmount):
+            for ticker in stockAmount:
+                print('Buying \'%s\'' % ticker)
+                if self.__check_if_ticker_exists(ticker):
+                    stock = simulate.Simulate(ticker)
+                    stock.SimulateBuy(stockAmount[ticker], self.getCurrentPrice(ticker)[ticker])
+                else:
+                    print('Could not buy stock \'%s\'' % ticker)
+                    return False
+        else:
+            print('Input not a dictionary')
 
-    # def testSell(self, stockAmount: dict):
-    #     if self.__check_dict(stockAmount):
-    #         for ticker in stockAmount:
-    #             print('Selling \'%s\'' % ticker)
-    #             if self.__check_if_ticker_exists(ticker):
-    #                 stock = simulate.Simulate(ticker)
-    #                 stock.SimulateSell(stockAmount[ticker], self.getCurrentPrice(ticker)[ticker])
-    #             else:
-    #                 print('Could not sell stock \'%s\'' % ticker)
-    #                 return False
-    #     else:
-    #         print('Input is not a dictionary')
+    def testSell(self, stockAmount: dict):
+        if self.__check_dict(stockAmount):
+            for ticker in stockAmount:
+                print('Selling \'%s\'' % ticker)
+                if self.__check_if_ticker_exists(ticker):
+                    stock = simulate.Simulate(ticker)
+                    stock.SimulateSell(stockAmount[ticker], self.getCurrentPrice(ticker)[ticker])
+                else:
+                    print('Could not sell stock \'%s\'' % ticker)
+                    return False
+        else:
+            print('Input is not a dictionary')
 
-    # def buyValue(self) -> float:
-    #     stock = simulate.Simulate()
-    #     return stock.buyValue()
+    def buyValue(self) -> float:
+        stock = simulate.Simulate()
+        return stock.buyValue()
 
-    # def totalValue(self) -> float:
-    #     stock = simulate.Simulate()
-    #     return stock.totalValue()
+    def totalValue(self) -> float:
+        stock = simulate.Simulate()
+        return stock.totalValue()
