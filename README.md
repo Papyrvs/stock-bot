@@ -15,11 +15,7 @@ The Degiro API is an API that is designed to interact with the trading platform 
 from Degiro import degiro
 
 tickers = ['NIO', 'TSLA'] 
-<<<<<<< HEAD
 stockAmount = {'NIO': 5, 'TSLA': 4} # Key is the stock, and value is the amount 
-=======
-stockAmount = {'NIO': 5, 'TSLA': 4} # Key is the stock, and value is the amount NOTE: DEPRECATED
->>>>>>> 4e45ea31e8bd300ddedcdf3e9aafb21c05cdee22
 
 obj = degiro.Degiro() # Creates an instance of degiro.Degiro()
 
@@ -44,7 +40,6 @@ obj.testSell(stockAmount) # Sells stocks
 ### Todo:
 - Buy/sell stocks
 - ~~Support currency~~
-- Create an algorithm 
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
