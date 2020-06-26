@@ -3,7 +3,7 @@ import lxml.html
 
 class Ticker:
 
-    def __init__(self, tickers: list):
+    def yahooFormat(self, tickers: list):
         if not isinstance(tickers, list):
             tickers = [tickers]
 
@@ -14,8 +14,10 @@ class Ticker:
                 tickers[i] = tick.split('/')[1] + "=X"
 
         self.yticker = tickers
+        self.yticker = [x.upper() for x in self.yticker]
 
-    def checkPrice(self) -> dict:
+    def checkPrice(self, tickers: list) -> dict:
+        self.yahooFormat(tickers)
         headers = {
             "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) \
             AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36"}
@@ -30,10 +32,13 @@ class Ticker:
                 # Looks for price in the HTML
                 try:
                     price = content.xpath(
-                        '//*[@id="quote-header-info"]/div[3]/div[1]/div/span[1]')[0].text
+                        '//*[@id="quote-header-info"]/div[3]/div[1]/div/span[1]')[0].text.replace(",", "")
                     prices[self.dticker[index]] = float(price)
                 except:
                     print('Error getting price: Ticker \'%s\' does not exist' % ticker)
 
                 
         return prices
+
+
+        
